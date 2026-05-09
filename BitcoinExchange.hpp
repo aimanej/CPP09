@@ -26,6 +26,14 @@ class FormatNotAccepted : public std::exception
     }
 };
 
+class DateNotAccepted : public std::exception
+{
+    virtual const char *what() const throw()
+    {
+        return "Date not in file ! ";
+    }
+};
+
 void input_validity(char *input);
 void map_parsing(std::map<std::string, float> &map);
 void valid_date(std::string str);

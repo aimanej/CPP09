@@ -10,17 +10,18 @@ int main(int ac, char **av)
         try{
 
             map_parsing(map);
-            
             input_validity(av[1]);
+            for(std::map<std::string, float>::iterator it = map.begin(); it != map.end(); it++)
+            {
+                std::cout << it->first << " " << std::fixed << std::setprecision(2)<< it->second << std::endl;
+            }
         }
         catch(std::exception &e)
         {
             std::cout << e.what() << std::endl;
         }
     }
-        // for(std::map<std::string, float>::iterator it = map.begin(); it != map.end(); it++)
-    // {
-    //     std::cout << it->first << " " << it->second << std::endl;
-    // }
+    else
+        std::cout << "no input file detected" << std::endl;
     
 }
