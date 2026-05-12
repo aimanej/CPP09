@@ -1,10 +1,10 @@
 #include "BitcoinExchange.hpp"
 #include <cstdlib>
-void map_parsing(std::map<std::string, float> &map)
+int map_parsing(std::map<std::string, float> &map)
 {
     std::ifstream data("data.csv");
     if(!data.is_open())
-        throw FileNotOpen();
+        return std::cout << "Error: could not open file." << std::endl, 0;
     std::string line;
     std::getline(data, line);
     int t = 0;
@@ -21,13 +21,13 @@ void map_parsing(std::map<std::string, float> &map)
     
     std::cout << " after parsing : " << t << std::endl ;
     data.close();
+    return 1;
 }
 
 int valid_date(std::string str_y, std::string str_v, std::map<std::string, float> map)
 {
     int t = 0;
-    // std::cout << str.size() << std::endl;
-    // std::cout << "strr  : " << str << std::endl;
+
     while(t < str_y.size() - 1)
     {
              t++;
@@ -66,11 +66,15 @@ int valid_date(std::string str_y, std::string str_v, std::map<std::string, float
     if(ss >> val)
     {
         // std::cout << "vaaal " << val << std::endl;
-        if(ss.peek() != EOF || val > 1000 || val < 0)
+        if(val > 1000)
         {
             // std::cout << "threw here 55" <<std::endl;
-            return std::cout << "value not accepted " << std::endl, 0;
+            return std::cout << "Error: too large a number" << std::endl, 0;
         }
+        else if(val < 0)
+            return std::cout << "Error: not a positive number." << std::endl, 0;
+        else if (ss.peek() != EOF)
+            return std::cout << "Error: input contains extra characters." << std::endl, 0;        
         // std::cout << "value " << val << std::endl;
     }
     else
@@ -78,36 +82,11 @@ int valid_date(std::string str_y, std::string str_v, std::map<std::string, float
     std::map<std::string, float>::iterator it = map.upper_bound(str_y);
     if(it != map.begin() && it->first != str_y)
             it--;
-    // std::cout << "checking : " << val << " " << it->second << std::endl; 
-    std::cout << year << " => " << val * it->second << std::endl;
-    // std::cout << str << std::endl;
+    long retval = val * it->second;
+    std::cout << str_y << " => " << val << " = " << retval << std::endl;
     return 1;
-    // std::cout << "year : " << year <<  " month : " << month << " day = " << day << std::endl;
-    
-    // std::cout << "year : " << year << std::endl;
+
 }
-
-// int valid_value(std::string str)
-// {
-//     std::stringstream ss(str);
-//     float val;
-//     // std::cout << "value of str " << str << std::endl;
-//     if(ss >> val)
-//     {
-//         if(ss.peek() != EOF || val > 1000 || val < 0)
-//         {
-//             // std::cout << "threw here 55" <<std::endl;
-//             return std::cout << "value not accepted " << std::endl, 0;
-//         }
-//         // std::cout << "value " << val << std::endl;
-//     }
-//     else
-//         return std::cout << "value not valuing " << str << std::endl, 0;
-    
-//     return 1;
- 
-
-// }
 
 void white_space_remover(std::string &str)
 { 
@@ -123,20 +102,22 @@ void white_space_remover(std::string &str)
     }
 }
 
-void input_validity(char *input, std::map<std::string, float> map)
+int input_validity(char *input, std::map<std::string, float> map)
 {
     std::ifstream data(input);
     if(!data.is_open())
-        throw FileNotOpen();
+        return std::cout << "Error: could not open file." << std::endl, 0;
     std::string line;
     std::getline(data, line);
+    std::cout << "line first read : " << line << std::endl;
+
     while(std::getline(data, line))
     {
         white_space_remover(line);
         // std::cout << line << std::endl;
         if(line.find('|', 0) != 10)
         {
-            std::cout << "format not accepted " << std::endl;
+            std::cout << "format not accepted => " << line << std::endl;
             continue;
             // throw FormatNotAccepted();
         }
@@ -147,5 +128,6 @@ void input_validity(char *input, std::map<std::string, float> map)
         // std::cout << "input " << std::endl;
 
     }
+    return 1;
 }
 

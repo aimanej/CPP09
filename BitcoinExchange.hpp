@@ -10,32 +10,9 @@
 #include <cstdlib>
 #include <string>
 
-class FileNotOpen : public std::exception
-{
-    virtual const char *what() const throw()
-    {
-        return "File does not exist or could not be opened !";
-    }
-};
 
-class FormatNotAccepted : public std::exception
-{
-    virtual const char *what() const throw()
-    {
-        return "input text format not tolerated ! ";
-    }
-};
-
-class DateNotAccepted : public std::exception
-{
-    virtual const char *what() const throw()
-    {
-        return "Date not in file ! ";
-    }
-};
-
-void input_validity(char *input, std::map<std::string, float> map);
-void map_parsing(std::map<std::string, float> &map);
+int input_validity(char *input, std::map<std::string, float> map);
+int map_parsing(std::map<std::string, float> &map);
 int valid_date(std::string str_y, std::string str_v, std::map<std::string, float> map);
 // int valid_value(std::string str);
 void white_space_remover(std::string &str);
