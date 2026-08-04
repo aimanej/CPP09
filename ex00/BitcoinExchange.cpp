@@ -15,7 +15,6 @@ int map_parsing(std::map<std::string, float> &map)
         std::string po = line.substr(0, 10);
         double val;
         ss >> val;
-        // std::cout << "string value : " << ss.str() << std::endl;
         map[po] = val;
     }
     
@@ -42,12 +41,10 @@ int valid_date(std::string str_y, std::string str_v, std::map<std::string, float
         }
    
     }
-    // std::string ye = str.substr(0, 4);
     int year = std::atoi(str_y.substr(0, 4).c_str());
     int month = std::atoi(str_y.substr(5, 2).c_str());
     int day = std::atoi(str_y.substr(8, 2).c_str());
 
-    // std::cout << "year taken : " << year << std::endl;
     if(year  > 2022 || year < 2009)
         return std::cout << "year out of range" << std::endl, 0;
     if(month < 1 || month > 12)
@@ -62,20 +59,16 @@ int valid_date(std::string str_y, std::string str_v, std::map<std::string, float
 
     std::stringstream ss(str_v);
     float val;
-    // std::cout << "value of str " << str << std::endl;
     if(ss >> val)
     {
-        // std::cout << "vaaal " << val << std::endl;
         if(val > 1000)
         {
-            // std::cout << "threw here 55" <<std::endl;
             return std::cout << "Error: too large a number" << std::endl, 0;
         }
         else if(val < 0)
             return std::cout << "Error: not a positive number." << std::endl, 0;
         else if (ss.peek() != EOF)
             return std::cout << "Error: input contains extra characters." << std::endl, 0;        
-        // std::cout << "value " << val << std::endl;
     }
     else
         return std::cout << "value not valuing " << str_v << std::endl, 0;
@@ -89,13 +82,13 @@ int valid_date(std::string str_y, std::string str_v, std::map<std::string, float
 }
 
 void white_space_remover(std::string &str)
-{ 
-    // std::cout << str << std::endl;
-    // std::cout << " size " << str.size() << std::endl;
+{
     std::string::iterator it = str.begin();
     while(it != str.end())
     {
         if(std::isspace(*it))
+            it = str.erase(it);
+        else if(*it == '\n')
             it = str.erase(it);
         else
             it++;
@@ -109,24 +102,20 @@ int input_validity(char *input, std::map<std::string, float> map)
         return std::cout << "Error: could not open file." << std::endl, 0;
     std::string line;
     std::getline(data, line);
-    std::cout << "line first read : " << line << std::endl;
+    white_space_remover(line);
+    if(line != "date|value")
+        return std::cout << "first line should be (date | value)" << std::endl, 0;
 
     while(std::getline(data, line))
     {
         white_space_remover(line);
-        // std::cout << line << std::endl;
         if(line.find('|', 0) != 10)
         {
             std::cout << "format not accepted => " << line << std::endl;
             continue;
-            // throw FormatNotAccepted();
         }
         if(!valid_date(line.substr(0, 10), line.substr(11, line.size()), map))
             continue;
-        
-        
-        // std::cout << "input " << std::endl;
-
     }
     return 1;
 }
