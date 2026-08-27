@@ -5,6 +5,8 @@ int main(int ac, char **av)
 {
 
     try{
+        if(ac < 3)
+            throw Parcing_issue();
         std::vector<int> vec;
 
         struct timeval v_start, v_end;        

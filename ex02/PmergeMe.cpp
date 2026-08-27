@@ -24,7 +24,6 @@ std::vector<int> parce_params(int ac, char **av)
         ss >> leftover;
         if(!(leftover.empty()) || holder <= 0 || is_dup(cont, holder))
         {
-            std::cout << "argument issue -> " << av[i] << std::endl;
             throw Parcing_issue();
         }
         cont.push_back(holder);
@@ -178,7 +177,6 @@ std::deque<int> param_parcer_dq(int ac, char **av)
         ss >> leftover;
         if(!(leftover.empty()) || holder <= 0 || is_dup(cont, holder))
         {
-            std::cout << "argument issue -> " << av[i] << std::endl;
             throw Parcing_issue();
         }
         cont.push_back(holder);

@@ -25,7 +25,7 @@ int map_parsing(std::map<std::string, float> &map)
 
 int valid_date(std::string str_y, std::string str_v, std::map<std::string, float> map)
 {
-    int t = 0;
+    size_t t = 0;
 
     while(t < str_y.size() - 1)
     {

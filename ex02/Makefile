@@ -11,7 +11,7 @@ Name= PmergeMe
 all: $(Name)
 
 $(Name): $(Header) $(Srcs)
-	$(CC) -O2 $(Flags) $(Srcs) -o $(Name)
+	$(CC) $(Flags) $(Srcs) -o $(Name)
 
 clean:
 	rm -rf $(Name)
