@@ -19,5 +19,7 @@ class Parcing_issue : public std::exception{
 
 std::vector<int> parce_params(int ac, char **av);
 std::vector<int> splitter(std::vector<int> vec);
+std::vector<int> insert_order(int size);
+std::vector<int> thaler(int n);
 
 #endif

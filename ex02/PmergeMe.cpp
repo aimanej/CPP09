@@ -33,18 +33,45 @@ std::vector<int> parce_params(int ac, char **av)
     return cont;
 }
 
-// std::vector<int> thaler(int n)
-// {
-//     std::vector<int> tmp = {1, 1};
-//     for(int t = 1; t < n; t++)
-//     {
-//         tmp.push_back(tmp[t] + tmp[t- 1] * 2);
-//     }
-//     return tmp;
-// }
+std::vector<int> thaler(int n)
+{
+    std::vector<int> tmp;
+
+    tmp.push_back(1);
+    tmp.push_back(1);
+    for(int t = 1; t < n; t++)
+    {
+        tmp.push_back(tmp[t] + tmp[t- 1] * 2);
+    }
+    return tmp;
+}
+
+std::vector<int> insert_order(int size)
+{
+    if(size == 0)
+        return {};
+    std::vector<int> jacob = thaler(size);
+    std::vector<int> order;
+
+    int prev = 0;
+    for(int i = 1; i < jacob.size(); i++)
+    {
+        int val = std::min(jacob[i], size);
+        for(int t = val; t > prev ; t--)
+        {
+            order.push_back(t - 1);
+        }
+        prev = val;
+        if(size < prev)
+            break;
+    }
+    return order;
+}
 
 std::vector<int> splitter(std::vector<int> vec)
 {
+    if (vec.size() == 1)
+        return {};
     int plus = -1;
     bool has_plus = !(vec.size() % 2 == 0);
 
@@ -65,11 +92,11 @@ std::vector<int> splitter(std::vector<int> vec)
         pairs.push_back(std::pair<int,int>(a,b));
     }
 
-    for(int t = 0; t < pairs.size(); t++)
-    {
-        std::cout << "(" <<  pairs[t].first << "," << pairs[t].second << ")" << " ";
-    }
-    std::cout << std::endl;
+    // for(int t = 0; t < pairs.size(); t++)
+    // {
+    //     std::cout << "(" <<  pairs[t].first << "," << pairs[t].second << ")" << " ";
+    // }
+    // std::cout << std::endl;
 
     std::vector<int> winners;
     for(int t = 0; t < pairs.size(); t++)
@@ -78,6 +105,11 @@ std::vector<int> splitter(std::vector<int> vec)
         winners.push_back(pairs[t].second);
     }
 
-    if(winners.size() > 1)
-        splitter(winners);
+    winners = splitter(winners);
+
+    std::vector<std::pair<int, int> > sorted_pairs;
+
+    // for(int t = 0; t < winners.size())
+
+    return winners;
 }

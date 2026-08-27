@@ -1,6 +1,6 @@
 CC= c++
 
-Flags=  -std=c++98
+Flags=  
 
 Srcs= PmergeMe.cpp main.cpp
 
