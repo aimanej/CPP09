@@ -1,17 +1,17 @@
 CC= c++
 
-Flags=  
+Flags= -Wall -Wextra -Werror -std=c++98
 
 Srcs= PmergeMe.cpp main.cpp
 
 Header= PmergeMe.hpp
 
-Name= merge
+Name= PmergeMe
 
 all: $(Name)
 
 $(Name): $(Header) $(Srcs)
-	$(CC) $(Flags) $(Srcs) -o $(Name)
+	$(CC) -O2 $(Flags) $(Srcs) -o $(Name)
 
 clean:
 	rm -rf $(Name)
